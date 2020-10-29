@@ -1,0 +1,44 @@
+.carousel-item img{
+    width: 100%;
+    height: 500px;
+}
+
+#titulo {
+    
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: #696969;
+    color:white;
+}
+
+.jumbotron{
+    background-color: green!important;
+    color: white!important;
+    
+}
+
+#jumb {
+    margin-top: 20px;
+}
+
+input {
+    width: 100%;
+}
+
+#formulario {
+    margin-bottom: 25px;
+}
+
+#descricao {
+    height: 100px;
+}
+
+#nave {
+    background-color: green!important; 
+}
+
+body {
+    background-image: url("../img/fundo.jpg");
+    background-size: 100% 100%;
+    
+}
