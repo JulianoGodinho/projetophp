@@ -67,6 +67,7 @@
             $habitat = $animal->getHabitat();
             $foto = "";
 
+            
             if ($id > 0) {
 
                 $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?, 
@@ -76,7 +77,7 @@
             } else {
 
                 $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?,
-                alimento = ?, peso = ?, habitat = ?, foto = ?, where nome ?");
+                alimento = ?, peso = ?, habitat = ?, foto = ?, where nome = ?");
                 $sql->bindParam(9, $nome);
 
             }
@@ -91,7 +92,7 @@
                 $sql->bindParam(8, $foto);
 
                 $sql->execute();
-
+                
         }
 
         public static function getAnimal($identificacao) {
@@ -101,21 +102,21 @@
 
             if (is_numeric($identificacao)) {
 
-                $sql = $con->prepare("select from animal where codigo = ?");
+                $sql = $con->prepare("select * from animal where id = ?");
                 $sql->bindParam(1, $identificacao);
 
             } else {
 
-                $sql = $con->prepare("select from animal where nome = ?");
+                $sql = $con->prepare("select * from animal where nome = ?");
                 $sql->bindParam(1, $identificacao);
 
             }
 
             $sql->setFetchMode(PDO::FETCH_ASSOC);
             $sql->execute();
-
+            
             $animal = null;
-
+            
             if ($registro = $sql->fetch()) {
 
                 $animal = new Animal($registro["id"],
@@ -127,11 +128,12 @@
                                      $registro["peso"],
                                      $registro["habitat"],
                                      $registro["foto"] );
-
-            }
-
+                                                       
+            } 
+            
             return $animal;
-
+            
+               
         }
 
         public static function getAnimais($campo, $ordem, $operador, $valor) {
@@ -149,7 +151,7 @@
 
             }
 
-            $sql->setFecthMode(PDO::FETCH_ASSOC);
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
             $sql->execute();
 
             $animalLista = array();
@@ -169,7 +171,7 @@
                 $animalLista[] = $animal;
 
             }
-
+            
             return $animalLista;
 
         }

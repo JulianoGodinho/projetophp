@@ -13,21 +13,30 @@
             $fotoAnimal = $animal->getFoto(); 
 
             echo "
-            <div class='col-md-4' style='margin-top:10px;'>
-            <div class='img-thumbnail' style='background-color: rgba(0,0,0,0.9); color:white;'>
-                <img src='img/$fotoAnimal' style='width:100%; height:100%;'>
-                <div class='caption'>
-                    <h2 style='font-size:1.5em;'>$nomeAnimal</h2>
-                    <br>
-                    <p style='color:gold;'>Especie: $especieAnimal</p> 
-                    <p style='color:gold;'>Nome científico: $nomeCientificoAnimal</p>
-                    <p style='font-size:0.8em; text-align:justify; height:100px;'>$descricaoAnimal</p>                    
-                    <p style='color:gold;'>Alimentação: $alimentoAnimal</p>
-                    <p style='color:deeppink;'>Habitat: $habitatAnimal</p>
-                    <p style='color:gold;'>Peso: $pesoAnimal</p>
+
+            <div class='container'>    
+            
+            <div class='row' style='background-color:green; margin-top:20px'>
+                <div class='col-md-4'>
+                    <img src='img/$fotoAnimal' style='height:100%; width:100%;' alt=''>
                 </div>
-            </div>
-        </div>
+
+                <div class='col-md-3' style='padding-top:35px;color:white;'>
+                  <ul>
+                    <li>$especieAnimal</li>
+                    <li>$nomeAnimal</li>
+                    <li>$nomeCientificoAnimal</li>
+                    <li>$alimentoAnimal</li>
+                    <li>$pesoAnimal</li>
+                    <li>$habitatAnimal</li>
+                  </ul>
+                </div>
+
+                <div class='col-md-5'style='text-align:justify; padding-top:35px;padding-right:30px;color:white;'>
+                    <p>$descricaoAnimal</p>
+                </div>
+             </div>
+             </div>
             ";
 
         }

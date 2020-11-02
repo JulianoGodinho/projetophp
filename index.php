@@ -39,7 +39,7 @@
 								<a class="nav-link" href="cadastro.php">Cadastro</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="cadastro.php">Buscar</a>
+								<a class="nav-link" href="listagem.php">Buscar</a>
 							</li>					
 							
 						</ul>
@@ -99,7 +99,7 @@
 
 			</div>
 
-			<div class="row text-center">
+			
 
 			<?php
 
@@ -118,7 +118,7 @@
  
 			?>
 
-			</div>
+			
 
 
 

@@ -22,41 +22,87 @@
             include_once "dao/animalDAO.php";
 
             session_start();
-            error_reporting( E_ALL ^E_NOTICE );
+            
             if (!isset($_SESSION["modo"])) {
                 $_SESSION["modo"] = 1;
             }
 
+            $id = "";
+            $especie = "";
+            $nome = "";
+            $nomeCientifico = "";
+            $descricao = "";
+            $alimento = "";
+            $peso = "";
+            $habitat = "";
+            $foto = "";
+
             if (isset($_GET["botaoAcao"])) {
                 if ($_GET["botaoAcao"] == "Gravar") {
+
+                    $id = null;
+                    $especie = $_GET["especie"];
+                    $nome = $_GET["nome"];
+                    $nomeCientifico = $_GET["nomeCientifico"];
+                    $descricao = $_GET["descricao"];
+                    $alimento = $_GET["alimento"];
+                    $peso = $_GET["peso"];
+                    $habitat = $_GET["habitat"];
+                    $foto = null;
+
                     $ani = new Animal(
-                       null,
-                       $_GET["especie"],
-                       $_GET["nome"],
-                       $_GET["nomeCientifico"],
-                       $_GET["descricao"],
-                       $_GET["alimento"],
-                       $_GET["peso"],
-                       $_GET["habitat"],
-                       null  
+                        $id,
+                        $especie,
+                        $nome,
+                        $nomeCientifico,
+                        $descricao,
+                        $alimento,
+                        $peso,
+                        $habitat,
+                        $foto
                     );
 
                 if ($_SESSION["modo"] == 1) {
                     AnimalDAO::inserir($ani);
-                }  
+                } else {
+                    AnimalDAO::atualizar($ani);
+                } 
 
                 } else if ($_GET["botaoAcao"] == "Excluir") {
                     AnimalDAO::excluir($_GET["nome"]);
                 } 
+
+                if (isset($_GET["botaoAcao"])) {
+                    if ($_GET["botaoAcao"] == "Excluir" || $_GET["botaoAcao"] == "Limpar"){
+                        $_SESSION["modo"] = 1;//inserção
+                    }else if ($_GET["botaoAcao"] == "Cancelar") {
+                        header("Location: listagem.php");
+                    }
+                    
+                    else {
+                        $_SESSION["modo"] = 2;//atualizar
+                    }
+
             }
 
-            if (isset($_GET["botaoAcao"])) {
-                if ($_GET["botaoAcao"] == "Excluir" || $_GET["botaoAcao"] == "Novo"){
-                    $_SESSION["modo"] = 1;//inserção
-                } else {
-                    $_SESSION["modo"] = 2;//atualizar
-                }
+            
             }
+
+            if(isset($_GET["selAnimal"])) {
+
+                $animal = AnimalDAO::getAnimal($_GET["selAnimal"]);
+                $especie = $animal->getEspecie();
+                $nome = $animal->getNome();
+                $nomeCientifico = $animal->getNomeCientifico();
+                $descricao = $animal->getDescricao();
+                $alimento = $animal->getAlimento();
+                $peso = $animal->getPeso();
+                $habitat = $animal->getHabitat();
+                $foto = $animal->getFoto();
+                
+            }
+
+            
 
         ?>
 
@@ -86,7 +132,7 @@
                             <a class="nav-link" href="cadastro.php">Cadastro</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" href="cadastro.php">Buscar</a>
+                            <a class="nav-link" href="listagem.php">Buscar</a>
                         </li>					
                    </ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -111,38 +157,38 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4">   
                         <strong><label for="especie">Espécie</label></strong>
-                        <input type="text" name="especie" value= <?php if($_SESSION["modo"]==2) echo $_GET["especie"]; else echo "''"; ?>>
+                        <input type="text" name="especie" value= <?php echo $especie; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="nome">Nome</label></strong>
-                        <input type="text" name="nome" value= <?php if($_SESSION["modo"]==2) echo $_GET["nome"]; else echo "''"; ?>>
+                        <input type="text" name="nome" value= <?php echo $nome; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="nomeCientidico">Nome Cientifíco</label></strong>
-                        <input type="text" name="nomeCientifico" value= <?php if($_SESSION["modo"]==2) echo $_GET["nomeCientifico"]; else echo "''"; ?>>
+                        <input type="text" name="nomeCientifico" value= <?php echo $nomeCientifico; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="descricao">Descrição</label></strong>
-                        <input type="text" id="descricao" name="descricao" value= <?php if($_SESSION["modo"]==2) echo $_GET["descricao"]; else echo "''"; ?>>
+                        <input type="text" id="descricao" name="descricao" value= <?php echo $descricao; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="alimento">Alimentação</label></strong>
-                        <input type="text" name="alimento" value= <?php if($_SESSION["modo"]==2) echo $_GET["alimento"]; else echo "''"; ?>>
+                        <input type="text" name="alimento" value= <?php echo $alimento; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="peso">Peso</label></strong>
-                        <input type="text" name="peso" value= <?php if($_SESSION["modo"]==2) echo $_GET["peso"]; else echo "''"; ?>>
+                        <input type="text" name="peso" value= <?php echo $peso; ?>>
                     </div>
                     <div class="col-md-4 offset-md-4" id="formulario">
                         <strong><label for="habitat">Habitat</label></strong>
-                        <input type="text" name="habitat" value= <?php if($_SESSION["modo"]==2) echo $_GET["habitat"]; else echo "''"; ?>>
+                        <input type="text" name="habitat" value= <?php echo $habitat;?>>
                     </div>
                     
                 </div>
 
                 <div class="row text-center">
                 <div class="col-md-2 offset-md-2">
-                    <input type="submit" name="botaoAcao" value="Novo" class="btn btn-primary">
+                    <input type="submit" name="botaoAcao" value="Limpar" class="btn btn-primary">
                 </div>
                 <div class="col-md-2">
                     <input type="submit" name="botaoAcao" value="Gravar" class="btn btn-success">
