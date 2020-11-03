@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    
+
 	<?php
 		include_once "model/animalLista.php";
 		include_once "view/animallistaview.php";
@@ -39,7 +39,7 @@
 			$operacao = $_GET["selOperacao"];
 			$ordenacao = $_GET["selOrdenacao"];
 
-			if ($_GET["btnFiltro"] == "Inserir") {
+			if ($_GET["btnFiltro"] == "inserir") {
 
 				header("Location: cadastro.php");
 
@@ -72,9 +72,9 @@
  	<div class="container">
 
 	 <header>
-        <div class="row">	
-            
-            <div class="col-md-12"> 
+        <div class="row">
+
+            <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nave">
                     <a class="navbar-brand" href="#">Mundo Animal</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -93,7 +93,7 @@
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="listagem.php">Buscar</a>
-                        </li>					
+                        </li>
                    </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -104,13 +104,13 @@
             </div>
         </div>
 	</header>
-	
+
         <div class="row text-center" id="cabecalhoLista">
             <div class="col-md-12">
                 <h1>Listagem de Animais</h1>
                 <br>
             </div>
-        
+
             <div class="col-md-12 text-center">
 
                 <form method="get" action="listagem.php">
@@ -158,10 +158,10 @@
 					</div>
 					<br><br>
                 </form>
-            </div>  
-        </div> 
+            </div>
+        </div>
 
-		<?php 
+		<?php
 			AnimalListaView::gerarLista($animais);
 			if (isset($_GET["btnFiltro"])) {
 
@@ -173,7 +173,7 @@
 					$('#selOrdenacao').val('$ordenacao');
 			    </script>
 				";
-				
+
 			}
 
 
@@ -185,4 +185,4 @@
 
 </body>
 
-</html>	
+</html>

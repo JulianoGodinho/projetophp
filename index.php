@@ -19,9 +19,9 @@
 
 <body>
 	<div class="container">
-		<div class="row">	
+		<div class="row">
 
-		   <div class="col-md-12"> 
+		   <div class="col-md-12">
 			   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nave">
 					<a class="navbar-brand" href="#">Mundo Animal</a>
 				    <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -40,8 +40,8 @@
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="listagem.php">Buscar</a>
-							</li>					
-							
+							</li>
+
 						</ul>
 						<form class="form-inline my-2 my-lg-0">
 							<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -86,20 +86,20 @@
 
 				</div>
 			</div>
-		</div>	
+		</div>
 
 
-			
+
 
 			<div class="row text-center">
 
-				<div class="col-md-12" id="jumb">
-					<h1 class="jumbotron">Espécies</h1>
+				<div class="col-md-12" id="titulo">
+						<h2>Espécies</h2>
 				</div>
 
 			</div>
 
-			
+
 
 			<?php
 
@@ -115,10 +115,10 @@
 				foreach ($listaAnimal as $animal) {
 					AnimalView::formarAnimal($animal);
 				}
- 
+
 			?>
 
-			
+
 
 
 

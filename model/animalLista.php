@@ -18,6 +18,20 @@
 
             $this->listaAnimal[] = $a1;
 
+            $a2 = new Animal(
+                null,
+                "Mamífero",
+                "Gato",
+                "Gatinho",
+                "Gostosinho",
+                "Carne",
+                 10,
+                 "Casa",
+                 "gato.jpg"
+            );
+
+            $this->listaAnimal[] = $a2;
+
         }
 
         public function pegarAnimal() {

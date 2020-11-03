@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1" > 
+        <meta name="viewport" content="width=device-width, initial-scale=1" >
         <title>Mundo Animal</title>
 
         <link rel="stylesheet" type="text/css" href="css/estilos.css">
@@ -22,7 +22,7 @@
             include_once "dao/animalDAO.php";
 
             session_start();
-            
+
             if (!isset($_SESSION["modo"])) {
                 $_SESSION["modo"] = 1;
             }
@@ -66,26 +66,26 @@
                     AnimalDAO::inserir($ani);
                 } else {
                     AnimalDAO::atualizar($ani);
-                } 
+                }
 
                 } else if ($_GET["botaoAcao"] == "Excluir") {
                     AnimalDAO::excluir($_GET["nome"]);
-                } 
+                }
 
                 if (isset($_GET["botaoAcao"])) {
-                    if ($_GET["botaoAcao"] == "Excluir" || $_GET["botaoAcao"] == "Limpar"){
+                    if (($_GET["botaoAcao"] == "Excluir") || ($_GET["botaoAcao"] == "Limpar")){
                         $_SESSION["modo"] = 1;//inserção
                     }else if ($_GET["botaoAcao"] == "Cancelar") {
                         header("Location: listagem.php");
                     }
-                    
+
                     else {
                         $_SESSION["modo"] = 2;//atualizar
                     }
 
             }
 
-            
+
             }
 
             if(isset($_GET["selAnimal"])) {
@@ -99,10 +99,10 @@
                 $peso = $animal->getPeso();
                 $habitat = $animal->getHabitat();
                 $foto = $animal->getFoto();
-                
+
             }
 
-            
+
 
         ?>
 
@@ -112,9 +112,9 @@
         <div class="container">
 
     <header>
-        <div class="row">	
-            
-            <div class="col-md-12"> 
+        <div class="row">
+
+            <div class="col-md-12">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nave">
                     <a class="navbar-brand" href="#">Mundo Animal</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -133,7 +133,7 @@
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="listagem.php">Buscar</a>
-                        </li>					
+                        </li>
                    </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -146,16 +146,16 @@
     </header>
 
             <div class="row text-center">
-                <div class="col-md-12" id="jumb">
-                    <h1 class="jumbotron" >Cadastro de animais</h1>
+                <div class="col-md-12" id="titulo">
+                    <h1>Cadastro de animais</h1>
                 </div>
             </div>
 
-    <section>        
+    <section>
             <form method="get" action="cadastro.php">
 
-                <div class="row">
-                    <div class="col-md-4 offset-md-4">   
+                <div class="row" style="background-color:#DDDDDD;">
+                    <div class="col-md-4 offset-md-4">
                         <strong><label for="especie">Espécie</label></strong>
                         <input type="text" name="especie" value= <?php echo $especie; ?>>
                     </div>
@@ -183,7 +183,7 @@
                         <strong><label for="habitat">Habitat</label></strong>
                         <input type="text" name="habitat" value= <?php echo $habitat;?>>
                     </div>
-                    
+
                 </div>
 
                 <div class="row text-center">
@@ -205,7 +205,7 @@
             </form>
     </section>
 
-        </div>    
+        </div>
 
 
 
