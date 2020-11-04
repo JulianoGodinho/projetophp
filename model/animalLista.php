@@ -23,7 +23,7 @@
                 "Mamífero",
                 "Gato",
                 "Gatinho",
-                "Gostosinho",
+                "cats",
                 "Carne",
                  10,
                  "Casa",

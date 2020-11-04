@@ -8,18 +8,21 @@
     margin-top: 25px;
     margin-bottom: 15px;
     padding-top: 20px;
-    background-color: #80ff00;
+    background-color:white;
     color:black;
 
 }
 
-.nav-link {
-    color: black!important;
+#cabecalhoLista{
+    background-color: rgba(230,232,250,0.8);
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.navbar-brand{
-    color:black!important;
-}
+
 
 input {
     width: 100%;
@@ -33,10 +36,7 @@ input {
     height: 100px;
 }
 
-#nave {
-    background-color: #80ff00!important;
 
-}
 
 body {
     background-image:url("../img/fundo.jpg");

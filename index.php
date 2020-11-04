@@ -18,7 +18,39 @@
 </head>
 
 <body>
+
+<?php
+
+	include_once "model/animal.php";
+	include_once "view/animalview.php";
+	include_once "model/animalLista.php";
+	include_once "dao/animalDAO.php";
+	include_once "dao/usuarioDAO.php";
+
+	$con = ConexaoBanco::getConexao();
+	
+	session_start();
+
+	$_SESSION["logado"] = false;
+
+	if(isset($_GET["entrar"])){
+		$usuario = $_GET["txtUsuario"];
+		$senha = $_GET["txtSenha"];
+
+		if(UsuarioDAO::logar($usuario, $senha)){
+			$_SESSION["logado"] = true;
+			session_cache_expire(10);
+			header("Location: listagem.php");
+		}
+
+	}
+
+	?>
+
+
+
 	<div class="container">
+
 		<div class="row">
 
 		   <div class="col-md-12">
@@ -88,6 +120,31 @@
 			</div>
 		</div>
 
+		<br>
+		<form method="get" action="index.php">
+			<div class="row">
+				<div class="col-md-5" style="font-size:1.2em; color:white;">
+					<strong>Quer editar os Animais?</strong>
+				</div>
+				<div class="col-md-1 text-center"style="color:white;">
+					Usuário:	
+				</div>
+				<div class="col-md-2">
+					<input class='ajustavel' type='text' name='txtUsuario' value='' style="color:black">	
+				</div>
+				<div class="col-md-1 text-center"style="color:white;">
+					Senha:
+				</div>
+				<div class="col-md-2">
+					<input class='ajustavel' type='password' name='txtSenha' value='' style="color:black">	
+				</div>
+				<div class="col-md-1">
+					<button class='btn-primary' type='submit' name='entrar' value='entrar'>Entrar</button>	
+				</div>
+			</div>
+		</form>
+		<br>
+
 
 
 
@@ -103,14 +160,9 @@
 
 			<?php
 
-				include_once "model/animal.php";
-				include_once "view/animalview.php";
-				include_once "model/animalLista.php";
+				
 
-				$lista = new AnimalLista();
-				$lista->carregarAnimal();
-
-				$listaAnimal = $lista->pegarAnimal();
+				$listaAnimal = AnimalDAO::getAnimais("nome", "asc","","");
 
 				foreach ($listaAnimal as $animal) {
 					AnimalView::formarAnimal($animal);

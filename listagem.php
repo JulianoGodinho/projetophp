@@ -25,29 +25,37 @@
 		include_once "model/animal.php";
 		include_once "dao/animalDAO.php";
 
-		session_start();
+        session_start();
+        
+        if(isset($_SESSION["logado"])){
+            if($_SESSION["logado"]==false){
+                header("Location: index.php");
+            }
+        } else {
+            header("Location: index.php");
+        }
 
 		$valor = "";
 		$campo = "";
 		$operacao = "";
 		$ordenacao = "";
 
-		if (isset($_GET["btnFiltro"])) {
+		if (isset($_POST["btnFiltro"])) {
 
-			$valor = $_GET["txtFiltro"];
-			$campo = $_GET["selTipoFiltro"];
-			$operacao = $_GET["selOperacao"];
-			$ordenacao = $_GET["selOrdenacao"];
+			$valor = $_POST["txtFiltro"];
+			$campo = $_POST["selTipoFiltro"];
+			$operacao = $_POST["selOperacao"];
+			$ordenacao = $_POST["selOrdenacao"];
 
-			if ($_GET["btnFiltro"] == "inserir") {
+			if ($_POST["btnFiltro"] == "inserir") {
 
 				header("Location: cadastro.php");
 
-			} else if ($_GET["btnFiltro"] == "desfazer") {
+			} else if ($_POST["btnFiltro"] == "desfazer") {
 
 				$animais = AnimalDAO::getAnimais("id", "asc", "","");
 
-			} else if ($_GET["btnFiltro"] == "filtrar") {
+			} else if ($_POST["btnFiltro"] == "filtrar") {
 
 				if ($valor == "") {
 
@@ -113,7 +121,7 @@
 
             <div class="col-md-12 text-center">
 
-                <form method="get" action="listagem.php">
+                <form method="post" action="listagem.php">
                     <div class="row">
                         <div class="col-md-1">
                             Filtro
@@ -163,7 +171,7 @@
 
 		<?php
 			AnimalListaView::gerarLista($animais);
-			if (isset($_GET["btnFiltro"])) {
+			if (isset($_POST["btnFiltro"])) {
 
 				echo "
 				<script>

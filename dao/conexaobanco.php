@@ -13,7 +13,7 @@
                 try {
 
                     self::$conexao = new PDO($stringConexao, $usuario, $senha);
-                    echo "Nova conexão criada com sucesso!<br>";
+                    
 
                 } catch (PDOException $e) {
                     
@@ -31,7 +31,7 @@
                 }
             }
 
-            echo "Conexão existente devolvida com sucesso.<br>";
+            
             return self::$conexao;
 
         }

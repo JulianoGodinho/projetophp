@@ -5,7 +5,7 @@
         public static function inserir($animal) {
 
             $con = ConexaoBanco::getConexao();
-            $sql = $con->prepare("insert into animal values (null, ?, ?, ?, ?, ?, ?, ?, null)");
+            $sql = $con->prepare("insert into animal values (null, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             $especie = $animal->getEspecie();
             $nome = $animal->getNome();
@@ -14,6 +14,7 @@
             $alimento = $animal->getAlimento();
             $peso = $animal->getPeso();
             $habitat = $animal->getHabitat();
+            $foto = $animal->getFoto();
 
             $sql->bindParam(1, $especie);
             $sql->bindParam(2, $nome);
@@ -22,6 +23,7 @@
             $sql->bindParam(5, $alimento);
             $sql->bindParam(6, $peso);
             $sql->bindParam(7, $habitat);
+            $sql->bindParam(8, $foto);
             $sql->execute();
 
         }
@@ -54,7 +56,7 @@
         }
 
         public static function atualizar($animal) {
-
+            
             $con = ConexaoBanco::getConexao();
 
             $id = $animal->getId();
@@ -65,21 +67,32 @@
             $alimento = $animal->getAlimento();
             $peso = $animal->getPeso();
             $habitat = $animal->getHabitat();
-            $foto = "";
+            $foto = $animal->getFoto();
 
             
             if ($id > 0) {
+                if ($foto =="" || $foto == null){
+                    $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?, 
+                    alimento = ?, peso = ?, habitat = ? where id = ?");
+                    $sql->bindParam(8, $id);
+                } else {
+                    $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?, 
+                    alimento = ?, peso = ?, habitat = ?, foto = ? where id = ?");
+                    $sql->bindParam(8, $foto);
+                    $sql->bindParam(9, $id);
 
-                $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?, 
-                alimento = ?, peso = ?, habitat = ?, foto = ? where id = ?");
-                $sql->bindParam(9, $id);
-
+                    }
             } else {
-
-                $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?,
-                alimento = ?, peso = ?, habitat = ?, foto = ?, where nome = ?");
-                $sql->bindParam(9, $nome);
-
+                if ($foto =="" || $foto == null){
+                    $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?,
+                    alimento = ?, peso = ?, habitat = ? where nome = ?");
+                    $sql->bindParam(8, $nome);
+                } else {
+                    $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?,
+                    alimento = ?, peso = ?, habitat = ?, foto = ? where nome = ?");
+                    $sql->bindParam(8, $foto);
+                    $sql->bindParam(9, $nome);
+                }
             }
 
                 $sql->bindParam(1, $especie);
@@ -89,7 +102,7 @@
                 $sql->bindParam(5, $alimento);
                 $sql->bindParam(6, $peso);
                 $sql->bindParam(7, $habitat);
-                $sql->bindParam(8, $foto);
+                
 
                 $sql->execute();
                 

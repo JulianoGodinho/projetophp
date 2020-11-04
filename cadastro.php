@@ -20,8 +20,17 @@
         <?php
             include_once "model/animal.php";
             include_once "dao/animalDAO.php";
+            include_once "imagem.php";
 
             session_start();
+
+	        if(isset($_SESSION["logado"])){
+                if($_SESSION["logado"]==false){
+                    header("Location: index.php");
+                }
+            } else {
+                header("Location: index.php");
+            }
 
             if (!isset($_SESSION["modo"])) {
                 $_SESSION["modo"] = 1;
@@ -35,20 +44,26 @@
             $alimento = "";
             $peso = "";
             $habitat = "";
-            $foto = "";
+            $foto = "semfoto.jpg";
 
-            if (isset($_GET["botaoAcao"])) {
-                if ($_GET["botaoAcao"] == "Gravar") {
+            if (isset($_POST["botaoAcao"])) {
+                if ($_POST["botaoAcao"] == "Gravar") {
 
                     $id = null;
-                    $especie = $_GET["especie"];
-                    $nome = $_GET["nome"];
-                    $nomeCientifico = $_GET["nomeCientifico"];
-                    $descricao = $_GET["descricao"];
-                    $alimento = $_GET["alimento"];
-                    $peso = $_GET["peso"];
-                    $habitat = $_GET["habitat"];
-                    $foto = null;
+                    $especie = $_POST["especie"];
+                    $nome = $_POST["nome"];
+                    $nomeCientifico = $_POST["nomeCientifico"];
+                    $descricao = $_POST["descricao"];
+                    $alimento = $_POST["alimento"];
+                    $peso = $_POST["peso"];
+                    $habitat = $_POST["habitat"];
+                    $arquivo = $_FILES["fileFoto"];
+                    if ($arquivo != "" && $arquivo != null) {
+                        $foto = Imagem::uploadImagem($arquivo, 2000, 2000, 5000, "img/");
+                    }else {
+                        $foto = "";
+                    }
+                   
 
                     $ani = new Animal(
                         $id,
@@ -66,16 +81,18 @@
                     AnimalDAO::inserir($ani);
                 } else {
                     AnimalDAO::atualizar($ani);
+                    $animalAux = AnimalDAO::getAnimal($nome);
+                    $foto = $animalAux->getFoto();
                 }
 
-                } else if ($_GET["botaoAcao"] == "Excluir") {
-                    AnimalDAO::excluir($_GET["nome"]);
+                } else if ($_POST["botaoAcao"] == "Excluir") {
+                    AnimalDAO::excluir($_POST["nome"]);
                 }
 
-                if (isset($_GET["botaoAcao"])) {
-                    if (($_GET["botaoAcao"] == "Excluir") || ($_GET["botaoAcao"] == "Limpar")){
+                if (isset($_POST["botaoAcao"])) {
+                    if (($_POST["botaoAcao"] == "Excluir") || ($_POST["botaoAcao"] == "Limpar")){
                         $_SESSION["modo"] = 1;//inserção
-                    }else if ($_GET["botaoAcao"] == "Cancelar") {
+                    } else if ($_POST["botaoAcao"] == "Cancelar") {
                         header("Location: listagem.php");
                     }
 
@@ -88,9 +105,9 @@
 
             }
 
-            if(isset($_GET["selAnimal"])) {
+            if(isset($_POST["selAnimal"])) {
 
-                $animal = AnimalDAO::getAnimal($_GET["selAnimal"]);
+                $animal = AnimalDAO::getAnimal($_POST["selAnimal"]);
                 $especie = $animal->getEspecie();
                 $nome = $animal->getNome();
                 $nomeCientifico = $animal->getNomeCientifico();
@@ -99,7 +116,10 @@
                 $peso = $animal->getPeso();
                 $habitat = $animal->getHabitat();
                 $foto = $animal->getFoto();
+                $_SESSION["modo"] = 2;
 
+            } else {
+                $_SESSION["modo"] = 1;
             }
 
 
@@ -152,28 +172,34 @@
             </div>
 
     <section>
-            <form method="get" action="cadastro.php">
+            <form method="post" action="cadastro.php" enctype="multipart/form-data">
 
-                <div class="row" style="background-color:#DDDDDD;">
+                <div class="row" style="color:white;">
+                    <div class="col-md-4 offset-md-4">
+                        <img src="img/<?php echo $foto;?>" style="width:100%; height:100%;">  
+                    </div>
+                    <div class="col-md-4 offset-md-4">
+                        <input type="file" name="fileFoto">
+                    </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="especie">Espécie</label></strong>
-                        <input type="text" name="especie" value= <?php echo $especie; ?>>
+                        <input type="text" name="especie" value= "<?php echo $especie;?>">
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="nome">Nome</label></strong>
-                        <input type="text" name="nome" value= <?php echo $nome; ?>>
+                        <input type="text" name="nome" value= "<?php echo $nome; ?>">
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="nomeCientidico">Nome Cientifíco</label></strong>
-                        <input type="text" name="nomeCientifico" value= <?php echo $nomeCientifico; ?>>
+                        <input type="text" name="nomeCientifico" value= "<?php echo $nomeCientifico;?>">
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="descricao">Descrição</label></strong>
-                        <input type="text" id="descricao" name="descricao" value= <?php echo $descricao; ?>>
+                        <textarea name="descricao" rows="8" wrap="hard" style="width: 100%;"><?php echo "$descricao";?></textarea>
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="alimento">Alimentação</label></strong>
-                        <input type="text" name="alimento" value= <?php echo $alimento; ?>>
+                        <input type="text" name="alimento" value= "<?php echo $alimento; ?>">
                     </div>
                     <div class="col-md-4 offset-md-4">
                         <strong><label for="peso">Peso</label></strong>
@@ -181,7 +207,7 @@
                     </div>
                     <div class="col-md-4 offset-md-4" id="formulario">
                         <strong><label for="habitat">Habitat</label></strong>
-                        <input type="text" name="habitat" value= <?php echo $habitat;?>>
+                        <input type="text" name="habitat" value= "<?php echo $habitat;?>">
                     </div>
 
                 </div>
@@ -207,12 +233,7 @@
 
         </div>
 
-
-
-
-
-
-    </body>
-
+</body>
+            
 
 </html>

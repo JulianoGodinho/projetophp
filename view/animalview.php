@@ -16,23 +16,24 @@
 
 
 
-            <div class='row' style='background-color:#80ff00; margin-top:20px'>
+            <div class='row' style='background-color:white; margin-top:20px '>
                 <div class='col-md-4'>
                     <img src='img/$fotoAnimal' style='height:100%; width:100%;border:solid 1px;border-color:black;' alt=''>
                 </div>
 
                 <div class='col-md-3' style='padding-top:35px;color:black;'>
                   <ul>
-                    <li>$especieAnimal</li>
-                    <li>$nomeAnimal</li>
-                    <li>$nomeCientificoAnimal</li>
-                    <li>$alimentoAnimal</li>
-                    <li>$pesoAnimal</li>
-                    <li>$habitatAnimal</li>
+                    <li><strong>Espécie:</strong> $especieAnimal</li>
+                    <li><strong>Nome: </strong>$nomeAnimal</li>
+                    <li><strong>Nome Cientifíco:</strong> $nomeCientificoAnimal</li>
+                    <li><strong>Alimentação:</strong> $alimentoAnimal</li>
+                    <li><strong>Peso:</strong> $pesoAnimal</li>
+                    <li><strong>Habitar:</strong> $habitatAnimal</li>
                   </ul>
                 </div>
 
-                <div class='col-md-5'style='text-align:justify; padding-top:35px;padding-right:30px;color:black;'>
+                <div class='col-md-5'style='text-align:justify; padding-top:35px;color:black;'>
+                    <strong>Descrição</strong>
                     <p>$descricaoAnimal</p>
                 </div>
              </div>

@@ -3,7 +3,7 @@
         public static function gerarLista($lista) {
 
             echo "
-                <form action='cadastro.php' method='get'>
+                <form action='cadastro.php' method='post'>
 
                 ";
 
@@ -29,14 +29,14 @@
                     echo "
 
 
-                          <div class='row' style='background-color:$cor; margin-bottom:20px'>
+                          <div class='row' style='background-color:$cor; margin-bottom:20px; border: 1px solid #AAAAAA;'>
                               <div class='col-md-3'>
                                   <button class='btn' type='submit' name='selAnimal' value= $id style='height:100%; width:100%; padding:0px!important;'>
                                       <img src='img/$foto' style='height:100%; width:100%;border:solid 1px;border-color:black;' alt=''>
                                   </button>
                               </div>
 
-                            <div class='col-md-3' style='padding-top:35px;color:black;'>
+                            <div class='col-md-3' style='padding-top:10px;color:black;'>
                               <ul>
                                 <li><strong>Espécie:</strong> $especie</li>
                                 <li><strong>Nome:</strong> $nome</li>
@@ -47,31 +47,24 @@
                               </ul>
                             </div>
 
-                            <div class='col-md-3'style='text-align:justify; padding-top:35px;padding-right:30px;color:black;'>
+                            <div class='col-md-5'style='text-align:justify; padding-top:10px;color:black;'>
+                                <strong>Descrição</strong>
                                 <p>$descricao</p>
                             </div>
 
 
                         <div class='col-md-1'>
-                            <button class='btn' type='submit' name='delAnimal' value= $id style='padding-top:80px; background-color:transparent;'>
+                            <button class='btn' type='submit' name='delAnimal' value= $id style='padding-top:35px; background-color:transparent;'>
                                 <img src= 'img/delete.png' style='height:100%; width:100%;'>
                             </button>
-                        </div>
-
-                        <div class='col-md-1'>
-                            <button class='btn' type='submit' name='selAnimal' value= $id style=' background-color:transparent;padding-top: 80px;'>
+                            <button class='btn' type='submit' name='selAnimal' value= $id style='background-color:transparent;padding-top: 35px;'>
                                 <img src= 'img/edit.png' style='height:100%; width:100%;'>
                             </button>
                         </div>
 
-
-                    </div>
-
-
+                  </div>
 
                     ";
-
-
 
                 }
 
