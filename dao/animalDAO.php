@@ -81,8 +81,8 @@
                     $sql->bindParam(8, $foto);
                     $sql->bindParam(9, $id);
 
-                    }
-            } else {
+                }
+                } else {
                 if ($foto =="" || $foto == null){
                     $sql = $con->prepare("update animal set especie = ?, nome = ?, nomeCientifico = ?, descricao = ?,
                     alimento = ?, peso = ?, habitat = ? where nome = ?");

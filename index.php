@@ -31,7 +31,10 @@
 	
 	session_start();
 
+	if(!isset($_SESSION["logado"])) {
+
 	$_SESSION["logado"] = false;
+	}
 
 	if(isset($_GET["entrar"])){
 		$usuario = $_GET["txtUsuario"];
